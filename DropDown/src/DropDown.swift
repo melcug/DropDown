@@ -858,21 +858,19 @@ extension DropDown {
 	public func deselectRow(at index: Index?) {
 		selectedRowIndex = nil
 
-		guard let index = index
-			, index >= 0
-			else { return }
+		guard let index = index, index >= 0 else { return }
 
 		tableView.deselectRow(at: IndexPath(row: index, section: 0), animated: true)
 	}
 
 	/// Returns the index of the selected row.
 	public var indexForSelectedRow: Index? {
-		return (tableView.indexPathForSelectedRow as NSIndexPath?)?.row
+		return tableView.indexPathForSelectedRow?.row
 	}
 
 	/// Returns the selected item.
 	public var selectedItem: String? {
-		guard let row = (tableView.indexPathForSelectedRow as NSIndexPath?)?.row else { return nil }
+		guard let row = tableView.indexPathForSelectedRow?.row else { return nil }
 
 		return dataSource[row]
 	}
@@ -894,9 +892,8 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: DPDConstant.ReusableIdentifier.DropDownCell, for: indexPath) as! DropDownCell
-		let index = (indexPath as NSIndexPath).row
 
-		configureCell(cell, at: index)
+		configureCell(cell, at: indexPath.row)
 
 		return cell
 	}
@@ -920,11 +917,11 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		cell.isSelected = (indexPath as NSIndexPath).row == selectedRowIndex
+		cell.isSelected = indexPath.row == selectedRowIndex
 	}
 
 	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		selectedRowIndex = (indexPath as NSIndexPath).row
+		selectedRowIndex = indexPath.row
 		selectionAction?(selectedRowIndex!, dataSource[selectedRowIndex!])
 
 		if let _ = anchorView as? UIBarButtonItem {
