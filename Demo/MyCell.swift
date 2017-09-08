@@ -10,7 +10,15 @@ import UIKit
 import DropDown
 
 class MyCell: DropDownCell {
+
+    open var suffixLabel: UILabel!
 	
-    @IBOutlet weak var suffixLabel: UILabel!
+    open override func setupView() {
+        optionLabel = UILabel()
+        contentView.addSubview(optionLabel)
+
+        suffixLabel = UILabel()
+        contentView.addSubview(suffixLabel)
+    }
 	
 }

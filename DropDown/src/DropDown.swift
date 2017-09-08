@@ -83,7 +83,6 @@ public final class DropDown: UIView {
 	fileprivate let tableView = UITableView()
 	fileprivate var templateCell: DropDownCell!
 
-
 	/// The view to which the drop down will displayed onto.
 	public weak var anchorView: AnchorView? {
 		didSet { setNeedsUpdateConstraints() }
@@ -273,14 +272,22 @@ public final class DropDown: UIView {
      
      Changing the cell nib automatically reloads the drop down.
      */
-	public var cellNib = UINib(nibName: "DropDownCell", bundle: Bundle(for: DropDownCell.self)) {
-		didSet {
-			tableView.register(cellNib, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
-			templateCell = nil
-			reloadAllComponents()
-		}
-	}
-	
+//	public var cellNib = UINib(nibName: "DropDownCell", bundle: Bundle(for: DropDownCell.self)) {
+//		didSet {
+//			tableView.register(cellNib, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
+//			templateCell = nil
+//			reloadAllComponents()
+//		}
+//	}
+
+    public var cellClass = DropDownCell.self {
+        didSet {
+            tableView.register(cellClass, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
+            templateCell = nil
+            reloadAllComponents()
+        }
+    }
+
 	//MARK: Content
 
 	/**
@@ -414,7 +421,8 @@ public final class DropDown: UIView {
 private extension DropDown {
 
 	func setup() {
-		tableView.register(cellNib, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
+        tableView.register(cellClass, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
+//		tableView.register(cellNib, forCellReuseIdentifier: DPDConstant.ReusableIdentifier.DropDownCell)
 
 		DispatchQueue.main.async {
 			//HACK: If not done in dispatch_async on main queue `setupUI` will have no effect
@@ -664,7 +672,7 @@ extension DropDown {
 	
 	fileprivate func fittingWidth() -> CGFloat {
 		if templateCell == nil {
-			templateCell = cellNib.instantiate(withOwner: nil, options: nil)[0] as! DropDownCell
+			templateCell = cellClass.init()
 		}
 		
 		var maxWidth: CGFloat = 0

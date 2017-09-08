@@ -11,9 +11,23 @@ import UIKit
 open class DropDownCell: UITableViewCell {
 		
 	//UI
-	@IBOutlet open weak var optionLabel: UILabel!
+    public var optionLabel: UILabel!
 	
-	var selectedBackgroundColor: UIColor?
+	public var selectedBackgroundColor: UIColor?
+
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupView()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    open func setupView() {
+        optionLabel = UILabel()
+        contentView.addSubview(optionLabel)
+    }
 
 }
 
