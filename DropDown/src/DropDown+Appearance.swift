@@ -20,11 +20,11 @@ extension DropDown {
 		appearance.cornerRadius = DPDConstant.UI.CornerRadius
 		appearance.shadowColor = DPDConstant.UI.Shadow.Color
 		appearance.shadowOffset = DPDConstant.UI.Shadow.Offset
-		appearance.shadowOpacity = DPDConstant.UI.Shadow.Opacity
-		appearance.shadowRadius = DPDConstant.UI.Shadow.Radius
+		appearance.shadowOpacityOf = DPDConstant.UI.Shadow.Opacity
+		appearance.shadowRadiusOf = DPDConstant.UI.Shadow.Radius
 		appearance.animationduration = DPDConstant.Animation.Duration
-		appearance.textColor = DPDConstant.UI.TextColor
-		appearance.textFont = DPDConstant.UI.TextFont
+		appearance.textColorOf = DPDConstant.UI.TextColor
+		appearance.textFontOf = DPDConstant.UI.TextFont
 	}
 
 }

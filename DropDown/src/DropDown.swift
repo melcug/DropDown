@@ -122,7 +122,7 @@ public final class DropDown: UIView {
 
 	Defaults to `anchorView.bounds.width - offset.x`.
 	*/
-	public var width: CGFloat? {
+	public var widthOf: CGFloat? {
 		didSet { setNeedsUpdateConstraints() }
 	}
 
@@ -202,7 +202,7 @@ public final class DropDown: UIView {
 
 	Changing the shadow opacity automatically reloads the drop down.
 	*/
-	public dynamic var shadowOpacity = DPDConstant.UI.Shadow.Opacity {
+	public dynamic var shadowOpacityOf = DPDConstant.UI.Shadow.Opacity {
 		willSet { tableViewContainer.layer.shadowOpacity = newValue }
 		didSet { reloadAllComponents() }
 	}
@@ -212,7 +212,7 @@ public final class DropDown: UIView {
 
 	Changing the shadow radius automatically reloads the drop down.
 	*/
-	public dynamic var shadowRadius = DPDConstant.UI.Shadow.Radius {
+	public dynamic var shadowRadiusOf = DPDConstant.UI.Shadow.Radius {
 		willSet { tableViewContainer.layer.shadowRadius = newValue }
 		didSet { reloadAllComponents() }
 	}
@@ -254,7 +254,7 @@ public final class DropDown: UIView {
 
 	Changing the text color automatically reloads the drop down.
 	*/
-	public dynamic var textColor = DPDConstant.UI.TextColor {
+	public dynamic var textColorOf = DPDConstant.UI.TextColor {
 		didSet { reloadAllComponents() }
 	}
 
@@ -263,7 +263,7 @@ public final class DropDown: UIView {
 
 	Changing the text font automatically reloads the drop down.
 	*/
-	public dynamic var textFont = DPDConstant.UI.TextFont {
+	public dynamic var textFontOf = DPDConstant.UI.TextFont {
 		didSet { reloadAllComponents() }
 	}
     
@@ -447,8 +447,8 @@ private extension DropDown {
 		tableViewContainer.layer.cornerRadius = cornerRadius
 		tableViewContainer.layer.shadowColor = shadowColor.cgColor
 		tableViewContainer.layer.shadowOffset = shadowOffset
-		tableViewContainer.layer.shadowOpacity = shadowOpacity
-		tableViewContainer.layer.shadowRadius = shadowRadius
+		tableViewContainer.layer.shadowOpacity = shadowOpacityOf
+		tableViewContainer.layer.shadowRadius = shadowRadiusOf
 
 		tableView.layoutMargins = .zero
 		tableView.separatorInset = .zero
@@ -581,7 +581,7 @@ extension DropDown {
 
 			guard isRightBarButtonItem else { break barButtonItemCondition }
 
-			let width = self.width ?? fittingWidth()
+			let width = self.widthOf ?? fittingWidth()
 			let anchorViewWidth = anchorView.plainView.frame.width
 			let x = -(width - anchorViewWidth)
 
@@ -626,7 +626,7 @@ extension DropDown {
 	fileprivate func computeLayoutBottomDisplay(window: UIWindow) -> ComputeLayoutTuple {
 		var offscreenHeight: CGFloat = 0
 		
-		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - bottomOffset.x
+		let width = self.widthOf ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - bottomOffset.x
 		
 		let anchorViewX = anchorView?.plainView.windowFrame?.minX ?? window.frame.midX - (width / 2)
 		let anchorViewY = anchorView?.plainView.windowFrame?.minY ?? window.frame.midY - (tableHeight / 2)
@@ -665,7 +665,7 @@ extension DropDown {
 			y = windowY
 		}
 		
-		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - topOffset.x
+		let width = self.widthOf ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - topOffset.x
 		
 		return (x, y, width, offscreenHeight)
 	}
@@ -708,7 +708,7 @@ extension DropDown {
 	}
 	
 	fileprivate func constraintWidthToFittingSizeIfNecessary(layout: inout ComputeLayoutTuple) {
-		guard width == nil else { return }
+		guard widthOf == nil else { return }
 		
 		if layout.width < fittingWidth() {
 			layout.width = fittingWidth()
@@ -913,8 +913,8 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 			cell.accessibilityIdentifier = localizationKeysDataSource[index]
 		}
 		
-		cell.optionLabel.textColor = textColor
-		cell.optionLabel.font = textFont
+		cell.optionLabel.textColor = textColorOf
+		cell.optionLabel.font = textFontOf
 		cell.selectedBackgroundColor = selectionBackgroundColor
 		
 		if let cellConfiguration = cellConfiguration {
